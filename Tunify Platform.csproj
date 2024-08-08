@@ -6,8 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Tunify_Platform</RootNamespace>
     <UserSecretsId>d870e610-351c-4ac1-9a82-404a61c9c057</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>.</DockerfileContext>
+
   </PropertyGroup>
 
   <ItemGroup>
