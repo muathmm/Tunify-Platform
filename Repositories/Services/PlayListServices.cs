@@ -52,5 +52,51 @@ namespace Tunify_Platform.Repositories.Services
 
             return PlayList;
         }
+        public async Task<PlayList> GetPlaylistByIdAsync(int playlistId)
+        {
+            return await _context.PlayLists
+                .Include(p => p.PlaylistSongs)
+                .ThenInclude(ps => ps.Song)
+                .FirstOrDefaultAsync(p => p.PlayListId == playlistId);
+        }
+
+     
+
+        public async Task AddSongToPlaylistAsync(int playlistId, int songId)
+        {
+            var playlist = await _context.PlayLists.FindAsync(playlistId);
+            var song = await _context.Songs.FindAsync(songId);
+
+            if (playlist != null && song != null)
+            {
+                var playlistSong = new PlaylistSong
+                {
+                    PlaylistId = playlistId,
+                    SongId = songId
+                };
+
+                _context.PlaylistSongs.Add(playlistSong);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<Song>> GetSongsForPlaylistAsync(int playlistId)
+        {
+            var playlist = await _context.PlayLists
+                .Include(p => p.PlaylistSongs)
+                .ThenInclude(ps => ps.Song)
+                .FirstOrDefaultAsync(p => p.PlayListId == playlistId);
+
+            return playlist?.PlaylistSongs.Select(ps => ps.Song).ToList();
+        }
+        public async Task<Song> GetSongByIdAsync(int songId)
+        {
+            return await _context.Songs.FirstOrDefaultAsync(s => s.SongId == songId);
+        }
+
+        public async Task<List<Song>> GetAllSongsAsync()
+        {
+            return await _context.Songs.ToListAsync();
+        }
     }
 }

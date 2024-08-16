@@ -31,24 +31,6 @@ namespace Tunify_Platform.Controlers
             return await _context.GetAllPlaylist();
         }
 
-        // GET: api/PlayLists/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<PlayList>> GetPlayList(int id)
-        {
-          if (_context.GetAllPlaylist() == null)
-          {
-              return NotFound();
-          }
-            var playList = await _context.GetPlaylistById(id);
-
-            if (playList == null)
-            {
-                return NotFound();
-            }
-
-            return playList;
-        }
-
         // PUT: api/PlayLists/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -97,6 +79,38 @@ namespace Tunify_Platform.Controlers
             return NoContent();
         }
 
-        
+
+   
+        [HttpPost("{playlistId}/songs/{songId}")]
+        public async Task<IActionResult> AddSongToPlaylist(int playlistId, int songId)
+        {
+            var playlist = await _context.GetPlaylistByIdAsync(playlistId);
+            var song = await _context.GetSongByIdAsync(songId);
+
+            if (playlist == null || song == null)
+            {
+                return NotFound();
+            }
+
+            await _context.AddSongToPlaylistAsync(playlistId, songId);
+            return Ok();
+        }
+
+   
+        [HttpGet("{playlistId}/songs")]
+        public async Task<IActionResult> GetSongsForPlaylist(int playlistId)
+        {
+            var songs = await _context.GetSongsForPlaylistAsync(playlistId);
+
+            if (songs == null || songs.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(songs);
+        }
+
+
+
     }
 }

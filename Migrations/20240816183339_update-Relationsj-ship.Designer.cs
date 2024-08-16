@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tunify_Platform.Data;
 
@@ -11,9 +12,11 @@ using Tunify_Platform.Data;
 namespace Tunify_Platform.Migrations
 {
     [DbContext(typeof(TunifyDbContext))]
-    partial class TunifyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240816183339_update-Relationsj-ship")]
+    partial class updateRelationsjship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,21 +129,7 @@ namespace Tunify_Platform.Migrations
                         new
                         {
                             PlayListId = 1,
-                            CreatedDate = new DateTime(2024, 8, 16, 21, 55, 3, 846, DateTimeKind.Local).AddTicks(3949),
-                            PlayListName = "My Favorites",
-                            UserId = 1
-                        },
-                        new
-                        {
-                            PlayListId = 2,
-                            CreatedDate = new DateTime(2024, 8, 16, 21, 55, 3, 846, DateTimeKind.Local).AddTicks(3968),
-                            PlayListName = "My Favorites",
-                            UserId = 2
-                        },
-                        new
-                        {
-                            PlayListId = 3,
-                            CreatedDate = new DateTime(2024, 8, 16, 21, 55, 3, 846, DateTimeKind.Local).AddTicks(3969),
+                            CreatedDate = new DateTime(2024, 8, 16, 21, 33, 39, 769, DateTimeKind.Local).AddTicks(9310),
                             PlayListName = "My Favorites",
                             UserId = 1
                         });

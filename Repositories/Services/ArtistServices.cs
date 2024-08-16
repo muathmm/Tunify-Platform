@@ -54,5 +54,32 @@ namespace Tunify_Platform.Repositories.Services
 
             return artist;
         }
+
+        public async Task AddSongToArtist(int artistId, int songId)
+        {
+            var artist = await _context.Artists.Include(a => a.Songs).FirstOrDefaultAsync(a => a.ArtistId == artistId);
+            var song = await _context.Songs.FindAsync(songId);
+
+            if (artist == null || song == null)
+            {
+                throw new ArgumentException("Artist or Song not found.");
+            }
+
+            artist.Songs.Add(song);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<List<Song>> GetSongsByArtist(int artistId)
+        {
+            var artist = await _context.Artists.Include(a => a.Songs)
+                .FirstOrDefaultAsync(a => a.ArtistId == artistId);
+
+            if (artist == null)
+            {
+                throw new ArgumentException("Artist not found.");
+            }
+
+            return artist.Songs.ToList();
+        }
     }
 }
