@@ -100,3 +100,62 @@ public class UserRepository : IUserRepository
 
 ![ output](output.png)
 
+
+
+## New Features Added
+
+In addition to the core functionalities, the following features have been added to improve the platform:
+
+1. **Navigation Properties**: Relationships between Playlists, Songs, and Artists are now enhanced by adding navigation properties.
+2. **New API Routes**: New routes were introduced to manage the relationships between:
+   - Playlists and Songs (allowing users to add songs to playlists).
+   - Artists and Songs (associating songs with their respective artists).
+3. **Repository Pattern**: Implemented the Repository Pattern to handle data access, improving separation of concerns and testability.
+4. **Unit Testing**: Unit tests were written using **XUnit** and **Moq** to mock the database context and ensure test coverage for the repository methods.
+
+## Entity-Relationship Diagram (ERD)
+
+Below is the Entity-Relationship Diagram (ERD) that illustrates the overall data structure and relationships between different entities in the database:
+
+![ERD Diagram](path/to/your/ERD-diagram.png)
+
+## Overview of Entity Relationships
+
+
+1. **PlayList**
+   - **Properties**: `PlayListId`, `UserId`, `PlayListName`, `CreatedDate`
+   - **Relationships**:
+     - A playlist is associated with one user.
+     - A playlist can contain many songs through the `PlaylistSong` table.
+
+
+
+## Repository Pattern
+
+### Introduction to the Repository Pattern
+
+The Repository Pattern provides an abstraction over the data access logic, making the application more modular and easier to test by decoupling the business logic from the data layer.
+
+### Benefits of Using the Repository Pattern
+
+- **Modularity**: Organizes data access logic into separate classes, making code more maintainable.
+- **Testability**: Data access logic can be mocked, allowing for more effective and isolated unit tests.
+- **Separation of Concerns**: Keeps business logic separate from data access, resulting in cleaner, more understandable code.
+
+### Implementation of the Repository Pattern
+
+The Repository Pattern was implemented by creating interfaces and their respective implementations for each entity (User, Playlist, Song, Artist). Repositories are injected into the controllers using Dependency Injection (DI), ensuring that the controllers only interact with the data access layer through repository interfaces.
+ ## Reult Output  
+
+![ output](output1.png)
+#### Example of `IUserRepository`
+
+```csharp
+public interface IUserRepository
+{
+    Task<User> GetUserByIdAsync(int id);
+    Task<IEnumerable<User>> GetAllUsersAsync();
+    Task AddUserAsync(User user);
+    Task UpdateUserAsync(User user);
+    Task DeleteUserAsync(int id);
+}

@@ -26,7 +26,7 @@ namespace Tunify_Platform.Controlers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Artist>>> GetArtists()
         {
-        
+
             return await _context.GetAllArtist();
         }
 
@@ -34,10 +34,10 @@ namespace Tunify_Platform.Controlers
         [HttpGet("{id}")]
         public async Task<ActionResult<Artist>> GetArtist(int id)
         {
-          if (_context.GetAllArtist() == null)
-          {
-              return NotFound();
-          }
+            if (_context.GetAllArtist() == null)
+            {
+                return NotFound();
+            }
             var artist = await _context.GetArtistById(id);
 
             if (artist == null)
@@ -58,11 +58,11 @@ namespace Tunify_Platform.Controlers
                 return BadRequest();
             }
 
-             await _context.UpdateArtist(id, artist);
+            await _context.UpdateArtist(id, artist);
 
-          
-             
-            
+
+
+
 
             return NoContent();
         }
@@ -72,12 +72,12 @@ namespace Tunify_Platform.Controlers
         [HttpPost]
         public async Task<ActionResult<Artist>> PostArtist(Artist artist)
         {
-          if (_context.GetAllArtist() == null)
-          {
-              return Problem("Entity set 'TunifyDbContext.Artists'  is null.");
-          }
+            if (_context.GetAllArtist() == null)
+            {
+                return Problem("Entity set 'TunifyDbContext.Artists'  is null.");
+            }
             _context.CreateArtist(artist);
-       
+
 
             return CreatedAtAction("GetArtist", new { id = artist.ArtistId }, artist);
         }
@@ -90,14 +90,43 @@ namespace Tunify_Platform.Controlers
             {
                 return NotFound();
             }
-             await _context.DeleteArtist(id);
-         
+            await _context.DeleteArtist(id);
 
-       
+
+
 
             return NoContent();
         }
 
-     
+        [HttpPost("{artistId}/songs/{songId}")]
+        public async Task<IActionResult> AddSongToArtist(int artistId, int songId)
+        {
+            try
+            {
+                await _context.AddSongToArtist(artistId, songId);
+                return Ok();
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+
+        // GET: api/artists/{artistId}/songs
+        [HttpGet("{artistId}/songs")]
+        public async Task<IActionResult> GetSongsByArtist(int artistId)
+        {
+            try
+            {
+                var songs = await _context.GetSongsByArtist(artistId);
+                return Ok(songs);
+            }
+            catch (ArgumentException ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+
+        }
     }
 }

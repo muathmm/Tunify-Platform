@@ -98,7 +98,9 @@ namespace Tunify_Platform.Data
 
           
             modelBuilder.Entity<PlayList>().HasData(
-                new PlayList { PlayListId = 1, UserId = 1, PlayListName = "My Favorites", CreatedDate = DateTime.Now }
+                new PlayList { PlayListId = 1, UserId = 1, PlayListName = "My Favorites", CreatedDate = DateTime.Now },
+                  new PlayList { PlayListId = 2, UserId = 2, PlayListName = "My Favorites", CreatedDate = DateTime.Now },
+                  new PlayList { PlayListId = 3, UserId = 1, PlayListName = "My Favorites", CreatedDate = DateTime.Now }
             );
 
          
