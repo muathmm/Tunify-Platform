@@ -1,6 +1,9 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using Tunify_Platform.Data;
+using Tunify_Platform.Models;
 using Tunify_Platform.Repositories.interfaces;
 using Tunify_Platform.Repositories.Services;
 
@@ -17,8 +20,16 @@ builder.Services.AddControllers()
 
 string ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
-builder.Services.AddDbContext<TunifyDbContext>(optionsX => optionsX.UseSqlServer(ConnectionString));
 
+
+
+builder.Services.AddDbContext<TunifyDbContext>(optionsX => optionsX.UseSqlServer(ConnectionString));
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<TunifyDbContext>();
+
+//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+//    .AddEntityFrameworkStores<TunifyDbContext>()
+//    .AddSignInManager<SignInManager<ApplicationUser>>();
 
 
 
@@ -27,6 +38,7 @@ builder.Services.AddScoped<Iuser, UserServices>();
 builder.Services.AddScoped<ISong, SongServices>();
 builder.Services.AddScoped<Iplaylist, PlayListServices>();
 builder.Services.AddScoped<Iartist, ArtistServices>();
+builder.Services.AddScoped<IAuthentication, AuthenticationService>();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo

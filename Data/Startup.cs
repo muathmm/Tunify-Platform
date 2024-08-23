@@ -1,10 +1,11 @@
-﻿using Microsoft.CodeAnalysis.Options;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Tunify_Platform.Models;
 
 namespace Tunify_Platform.Data
 {
-    public class TunifyDbContext : DbContext
+    public class TunifyDbContext : IdentityDbContext<ApplicationUser>
     {
 
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Tunify_Platform.Data;
 using Tunify_Platform.Models;
+using Tunify_Platform.Models.DTO;
 using Tunify_Platform.Repositories.interfaces;
 
 namespace Tunify_Platform.Repositories.Services
@@ -44,6 +45,8 @@ namespace Tunify_Platform.Repositories.Services
             return User;
         }
 
+      
+
         public async Task<User> UpdateUser(int id, User  updateuser)
         {
             var upuser = await _context.Users.FindAsync(id);
@@ -54,5 +57,6 @@ namespace Tunify_Platform.Repositories.Services
             return updateuser;
 
         }
+
     }
 }
