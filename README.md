@@ -8,7 +8,7 @@ Tunify is a music platform designed to provide users with an exceptional listeni
 
 Below is the Entity-Relationship Diagram (ERD) that illustrates the overall data structure and relationships between different entities in the database:
 
-
+![ERD Diagram](path_to_your_erd_image)
 
 ## Overview of Entity Relationships
 
@@ -70,28 +70,54 @@ The Repository Pattern is a design pattern that provides an abstraction over dat
 
 In the Tunify Platform application, the Repository Pattern is implemented by creating interfaces and their respective implementations for each entity (User, Playlist, Song, Artist). These repositories are injected into the controllers via constructor injection, ensuring that the controllers only interact with the data access layer through the repository interfaces.
 
-### Example
+## Lab 14: Implementing Authentication with Identity
 
-For example, the `IUserRepository` interface defines the necessary methods for interacting with the User entity. The `UserRepository` class implements this interface, providing the actual data access logic using Entity Framework Core.
+### Overview
 
-```csharp
-public interface IUserRepository
-{
-    Task<User> GetUserByIdAsync(int id);
-    Task<IEnumerable<User>> GetAllUsersAsync();
-    Task AddUserAsync(User user);
-    Task UpdateUserAsync(User user);
-    Task DeleteUserAsync(int id);
-}
+This lab extends the Tunify Platform by integrating ASP.NET Core Identity for user authentication. It includes functionalities for user registration, login, and logout.
 
-public class UserRepository : IUserRepository
-{
-    private readonly TunifyDbContext _context;
+### Identity Setup
 
-    public UserRepository(TunifyDbContext context)
-    {
-        _context = context;
-    }
+1. **Install Identity Package:**
+   - Install `Microsoft.AspNetCore.Identity.EntityFrameworkCore` via NuGet Package Manager.
 
-    // Implementation of the methods defined in the interface
-}
+2. **Configure Identity in Program.cs:**
+   - Add Identity services in the service configuration section:
+     ```csharp
+     builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+         .AddEntityFrameworkStores<TunifyDbContext>();
+     ```
+   - Add `app.UseAuthentication();` in the middleware section.
+
+### Implemented Features
+
+1. **Registration:**
+   - Users can register by providing their email and password.
+   - The registration is handled by the `Register` action in the `AccountController`.
+
+2. **Login:**
+   - Users can log in using their credentials.
+   - The login is handled by the `Login` action in the `AccountController`.
+
+3. **Logout:**
+   - Users can log out, which clears their authentication cookies.
+   - The logout is handled by the `Logout` action in the `AccountController`.
+
+### How to Use
+
+- To **register** a new user, send a POST request to `/api/account/register` with the `RegisterDto` (email and password).
+- To **login**, send a POST request to `/api/account/login` with the `LoginDto` (email, password, and remember me).
+- To **logout**, send a POST request to `/api/account/logout`.
+
+### Error Handling
+
+- The system handles errors during registration, login, and logout, providing feedback to the user.
+- Errors are logged for troubleshooting purposes.
+  
+## Output
+### Register
+![ERD Diagram](register.png)
+### login
+![ERD Diagram](login.png)
+### logout
+![ERD Diagram](logout.png)

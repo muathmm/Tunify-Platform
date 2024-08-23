@@ -1,4 +1,6 @@
-﻿using Tunify_Platform.Models;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Tunify_Platform.Models;
+using Tunify_Platform.Models.DTO;
 
 namespace Tunify_Platform.Repositories.interfaces
 {
@@ -11,6 +13,8 @@ namespace Tunify_Platform.Repositories.interfaces
         Task<User> UpdateUser(int id, User user);
 
         Task DeleteUser(int id);
+
+       
     }
 
 }
