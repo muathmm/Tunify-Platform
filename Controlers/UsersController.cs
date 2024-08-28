@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace Tunify_Platform.Controlers
         }
 
         // GET: api/Users
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -30,7 +32,9 @@ namespace Tunify_Platform.Controlers
             return await _context.GetAllUsers();
         }
 
+
         // GET: api/Users/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
@@ -58,6 +62,7 @@ namespace Tunify_Platform.Controlers
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [Authorize(Roles = "admin")]
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
@@ -71,7 +76,9 @@ namespace Tunify_Platform.Controlers
             return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
 
+
         // DELETE: api/Users/5
+        [Authorize (Roles ="admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {

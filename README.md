@@ -121,3 +121,22 @@ This lab extends the Tunify Platform by integrating ASP.NET Core Identity for us
 ![ERD Diagram](login.png)
 ### logout
 ![ERD Diagram](logout.png)
+
+## JWT Authentication in Tunify Platform
+
+### What is JWT?
+
+JWT, or JSON Web Token, is a compact, URL-safe means of representing claims to be transferred between two parties. The claims in a JWT are encoded as a JSON object that is used as the payload of a JSON Web Signature (JWS) structure or as the plaintext of a JSON Web Encryption (JWE) structure, enabling the claims to be digitally signed or integrity-protected with a Message Authentication Code (MAC) and/or encrypted.
+
+### How JWT Works
+
+A JWT typically consists of three parts separated by dots (`.`):
+
+1. **Header**: 
+   - The header typically consists of two parts: the type of the token, which is JWT, and the signing algorithm being used, such as HMAC SHA256.
+   ```json
+   {
+     "alg": "HS256",
+     "typ": "JWT"
+   }
+
